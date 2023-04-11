@@ -5,12 +5,21 @@ import time
 from fastapi import FastAPI
 from fastapi.exceptions import HTTPException
 from pydantic import BaseModel
+from yt_dlp.postprocessor import FFmpegPostProcessor
+
 
 download_path = os.environ.get('DOWNLOAD_PATH')
 port = os.environ.get('PORT')
+ffmpeg_location = os.environ.get('FFMPEG_LOCATION')
 
-if download_path is None or port is None:
+
+if download_path is None \
+        or port is None\
+        or ffmpeg_location is None:
     raise Exception('application environment not set properly')
+
+
+FFmpegPostProcessor._ffmpeg_location.set(ffmpeg_location)
 
 
 class YtVideoDownloadRequestBody(BaseModel):
