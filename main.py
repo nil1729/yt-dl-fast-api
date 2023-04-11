@@ -7,8 +7,9 @@ from fastapi.exceptions import HTTPException
 from pydantic import BaseModel
 
 download_path = os.environ.get('DOWNLOAD_PATH')
+port = os.environ.get('PORT')
 
-if download_path is None:
+if download_path is None or port is None:
     raise Exception('application environment not set properly')
 
 
@@ -23,6 +24,11 @@ def generate_random_file_name():
 
 
 app = FastAPI()
+
+
+@app.get("/")
+def health():
+    return {"success": "true", "message": f'downloader service running on port {port}'}
 
 
 @app.post("/api/download")
