@@ -5,11 +5,8 @@ on:
     branches:
       - "main"
 
-env:
-  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-
 jobs:
-  docker:
+  build-and-publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,7 +21,7 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          username: nil1729
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push
@@ -32,4 +29,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: $DOCKERHUB_USERNAME/yt-dl-fast-api:latest
+          tags: nil1729/yt-dl-fast-api:latest
